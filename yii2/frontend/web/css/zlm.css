@@ -1,0 +1,80 @@
+.f10 {
+    font-size: 10px;
+}
+
+.f12 {
+    font-size: 12px;
+}
+
+.f14 {
+    font-size: 14px;
+}
+
+.f16 {
+    font-size:16px;
+}
+
+.f18 {
+    font-size:18px;
+}
+.primary-bg {
+    background: #32B294;
+}
+
+.primary-color {
+    color: #32B294;
+}
+.primary-border {
+    border-color: #32B294;
+}
+
+.weak-color {
+    color:#BBE2C9;
+}
+
+.white-bg {
+    background: white;
+}
+
+.white-color {
+    color: white;
+}
+
+.orange-color {
+    color: orange;
+}
+
+.black-color {
+    color:black;
+}
+
+.darkgrey-color {
+    color: darkgrey;
+}
+.default-title{
+    margin-bottom: 7px;
+    margin-top: 7px;
+    font-size: 14px;
+}
+.default-input {
+    -webkit-appearance:none;
+    border: 0px;
+    color: grey;
+    text-align : right;
+    font-size: 12px;
+
+}
+select {
+    direction: rtl;
+}
+
+.padding5 {
+    padding: 5px;
+}
+.home1 {
+    background-size: 25px 25px;
+    background-image: url("/home1.svg");
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+}

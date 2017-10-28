@@ -1,0 +1,270 @@
+2017-07-17  16：43
+ALTER TABLE `job` ADD `is_hot` TINYINT(1) NULL DEFAULT NULL COMMENT '是否是热搜1是热搜职位0是否' AFTER `job_type`;
+ALTER TABLE `user_certification` CHANGE `company_name` `company_name` VARCHAR(150) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '公司名称';
+ALTER TABLE `user_certification` CHANGE `cer_idcard` `cer_idcard` VARCHAR(18) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '认证人身份证号';
+ALTER TABLE `user_certification` CHANGE `company_img` `company_img` VARCHAR(150) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '公司的营业执照';
+ALTER TABLE `user` DROP `user_name`;
+ALTER TABLE `user` DROP `user_pwd`;
+ALTER TABLE `user` CHANGE `headimgurl` `headimgurl` VARCHAR(150) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图像地址URL';
+
+
+
+2017-07-18 08:50
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+--  Table structure for `region`
+-- ----------------------------
+DROP TABLE IF EXISTS `region`;
+CREATE TABLE `region` (
+  `regionid` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `regionname` varchar(30) DEFAULT NULL,
+  `parentid` int(11) DEFAULT NULL,
+  PRIMARY KEY (`regionid`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+--  Records of `region`
+-- ----------------------------
+BEGIN;
+INSERT INTO `region` VALUES ('1', '杭州', '0'), ('2', '广州', '0'), ('3', '北京', '0'), ('4', '上海', '0'), ('5', '南京', '0'), ('6', '苏州', '0'), ('7', '武汉', '0'), ('8', '十堰', '0'), ('9', '荆州', '0'), ('10', '襄阳', '0'), ('11', '成都', '0'), ('12', '浦东新区', '4'), ('13', '奉贤区', '4'), ('14', '徐汇区', '4'), ('15', '丹江口', '8'), ('16', '郧阳区', '8'), ('17', '茅箭区', '8'), ('18', '武昌区', '7'), ('19', '汉口区', '7'), ('20', '新洲区', '7'), ('21', '海湾镇', '13'), ('22', '唐镇', '12'), ('23', '川沙', '12'), ('24', '金桥商业区', '12'), ('25', '张江高科', '12');
+COMMIT;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+2017-07-18-14：46
+ALTER TABLE `order_post` CHANGE `order_post_ben` `order_post_ids` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '福利待遇id集合';
+
+
+-- 7.29 新增三个表
+
+--
+-- 表的结构 `user_referrals`
+--
+
+CREATE TABLE `user_referrals` (
+  `id` int(10) NOT NULL COMMENT 'id',
+  `user_id` int(10) NOT NULL COMMENT 'user_id',
+  `name` varchar(50) NOT NULL COMMENT '姓名',
+  `sex` tinyint(1) NOT NULL COMMENT '1：男 2：女 0：未知',
+  `age` smallint(3) NOT NULL COMMENT '年龄',
+  `idno` varchar(18) NOT NULL COMMENT '身份证号码',
+  `mobile_phone` varchar(50) NOT NULL COMMENT '手机号码',
+  `province` varchar(20) NOT NULL COMMENT '省',
+  `city` varchar(30) NOT NULL COMMENT '城市',
+  `area` varchar(50) NOT NULL COMMENT '区',
+  `education` varchar(20) NOT NULL COMMENT '学历',
+  `working_year` smallint(2) NOT NULL COMMENT '工作年限',
+  `job_id1` int(5) NOT NULL COMMENT '期望职位1',
+  `job_id2` int(5) NOT NULL COMMENT '期望职位2',
+  `job_id3` int(5) NOT NULL COMMENT '期望职位3',
+  `skill1` int(5) NOT NULL COMMENT '技能1',
+  `skill2` int(5) NOT NULL COMMENT '技能2',
+  `skill3` int(5) NOT NULL COMMENT '技能3',
+  `tag1` int(5) NOT NULL COMMENT '标签1',
+  `tag2` int(5) NOT NULL COMMENT '标签2',
+  `tag3` int(5) NOT NULL COMMENT '标签3'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `user_referrals`
+--
+ALTER TABLE `user_referrals`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `education` (`education`),
+  ADD KEY `job_id1` (`job_id1`,`job_id2`,`job_id3`),
+  ADD KEY `tag1` (`tag1`,`tag2`,`tag3`);
+
+--
+-- 在导出的表使用AUTO_INCREMENT
+--
+
+--
+-- 使用表AUTO_INCREMENT `user_referrals`
+--
+ALTER TABLE `user_referrals`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'id';
+
+  -- 表的结构 `user_referrals_skill`
+  --
+
+  CREATE TABLE `user_referrals_skill` (
+    `id` int(10) NOT NULL COMMENT 'id',
+    `user_id` int(10) NOT NULL,
+    `name` varchar(50) NOT NULL
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+  --
+  -- Indexes for dumped tables
+  --
+
+  --
+  -- Indexes for table `user_referrals_skill`
+  --
+  ALTER TABLE `user_referrals_skill`
+    ADD PRIMARY KEY (`id`),
+    ADD KEY `user_id` (`user_id`);
+
+  --
+  -- 在导出的表使用AUTO_INCREMENT
+  --
+
+  --
+  -- 使用表AUTO_INCREMENT `user_referrals_skill`
+  --
+  ALTER TABLE `user_referrals_skill`
+    MODIFY `id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'id';
+
+    -- 表的结构 `user_referrals_tag`
+    --
+
+    CREATE TABLE `user_referrals_tag` (
+      `id` int(10) NOT NULL,
+      `user_id` int(10) NOT NULL,
+      `name` varchar(50) NOT NULL
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+    --
+    -- Indexes for dumped tables
+    --
+
+    --
+    -- Indexes for table `user_referrals_tag`
+    --
+    ALTER TABLE `user_referrals_tag`
+      ADD PRIMARY KEY (`id`),
+      ADD KEY `user_id` (`user_id`);
+
+    --
+    -- 在导出的表使用AUTO_INCREMENT
+    --
+
+    --
+    -- 使用表AUTO_INCREMENT `user_referrals_tag`
+    --
+    ALTER TABLE `user_referrals_tag`
+      MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+     -- 07-21-1:00 更新下边这三个表
+     SET NAMES utf8mb4;
+     SET FOREIGN_KEY_CHECKS = 0;
+
+     -- ----------------------------
+     --  Table structure for `order_post_time`
+     -- ----------------------------
+     DROP TABLE IF EXISTS `order_post_time`;
+     CREATE TABLE `order_post_time` (
+       `tim_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+       `time_start` time DEFAULT NULL COMMENT '开始时间',
+       `time_end` time DEFAULT NULL COMMENT '结束时间',
+       `work_day` varchar(255) DEFAULT NULL COMMENT '选择周一到周日 工作时间',
+       `order_post_id` int(11) DEFAULT NULL COMMENT '单的ID',
+       `start_date` varchar(30) DEFAULT NULL COMMENT '开始日期',
+       `end_date` varchar(30) DEFAULT NULL COMMENT '结束日期',
+       PRIMARY KEY (`tim_id`)
+     ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+     -- ----------------------------
+     --  Records of `order_post_time`
+     -- ----------------------------
+     BEGIN;
+     INSERT INTO `order_post_time` VALUES ('1', '03:45:00', '14:00:00', '周四,周五,', '16', '2017-07-29', '2017-07-18'), ('2', null, null, '周四,周六,', '16', '2017-07-11', '2017-07-21'), ('3', '15:04:00', '12:04:00', '周一,周三,', '16', '2017-07-15', '2017-07-17'), ('4', '17:26:17', '17:26:21', '周五，周六', '17', '2017-09-23', '2017-07-23'), ('5', '05:27:02', '17:35:14', '周六，周日', '17', '2017-08-23', '2017-07-23'), ('6', null, null, '周日, ', '19', '2017-07-22', '2017-07-18');
+     COMMIT;
+
+     SET FOREIGN_KEY_CHECKS = 1;
+
+     SET NAMES utf8mb4;
+     SET FOREIGN_KEY_CHECKS = 0;
+
+     -- ----------------------------
+     --  Table structure for `order_post_ben`
+     -- ----------------------------
+     DROP TABLE IF EXISTS `order_post_ben`;
+     CREATE TABLE `order_post_ben` (
+       `ben_id` int(11) NOT NULL COMMENT '福利待遇ID',
+       `ben_name` varchar(255) DEFAULT NULL COMMENT '福利待遇名称',
+       `order_post_id` int(11) DEFAULT NULL COMMENT '发单ID',
+       PRIMARY KEY (`ben_id`)
+     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+     -- ----------------------------
+     --  Records of `order_post_ben`
+     -- ----------------------------
+     BEGIN;
+     INSERT INTO `order_post_ben` VALUES ('1', '商业保险', '16'), ('2', '包餐', '16'), ('3', '班车接送', '17'), ('4', '补贴', '17');
+     COMMIT;
+
+     SET FOREIGN_KEY_CHECKS = 1;
+
+     SET NAMES utf8mb4;
+     SET FOREIGN_KEY_CHECKS = 0;
+
+     -- ----------------------------
+     --  Table structure for `benefit`
+     -- ----------------------------
+     DROP TABLE IF EXISTS `benefit`;
+     CREATE TABLE `benefit` (
+       `b_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+       `b_name` varchar(255) NOT NULL COMMENT '平台默认的福利待遇',
+       PRIMARY KEY (`b_id`)
+     ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+     -- ----------------------------
+     --  Records of `benefit`
+     -- ----------------------------
+     BEGIN;
+     INSERT INTO `benefit` VALUES ('1', '周末双休'), ('2', '年终体检'), ('3', '班车接送'), ('4', '加班补助');
+     COMMIT;
+
+     SET FOREIGN_KEY_CHECKS = 1;
+
+     SET NAMES utf8mb4;
+     SET FOREIGN_KEY_CHECKS = 0;
+
+     -- ----------------------------
+     --  Table structure for `order_suc`
+     -- ----------------------------
+     DROP TABLE IF EXISTS `order_suc`;
+     CREATE TABLE `order_suc` (
+       `order_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+       `job_id` int(11) DEFAULT NULL COMMENT '需要职位名称id',
+       `work_name` varchar(50) DEFAULT NULL COMMENT '发布职位名称',
+       `people_num` int(11) DEFAULT NULL COMMENT '人数',
+       `people_edu` varchar(50) DEFAULT NULL COMMENT '学历',
+       `people_exc` varchar(35) DEFAULT NULL COMMENT '工作年限',
+       `people_age` varchar(30) DEFAULT NULL COMMENT '所需要年龄段',
+       `area_detail` varchar(50) DEFAULT NULL COMMENT '详细地址',
+       `order_post_id` int(11) DEFAULT NULL COMMENT '订单时间表',
+       `duty_desc` text,
+       `company_name` varchar(150) DEFAULT NULL,
+       `city` int(11) DEFAULT NULL COMMENT '城市ID',
+       `district` int(11) DEFAULT NULL COMMENT '区ID',
+       `area` int(11) DEFAULT NULL COMMENT '商业区ID',
+       `user_id` int(11) DEFAULT NULL COMMENT '用户ID',
+       `order_status` tinyint(4) DEFAULT NULL COMMENT '订单状态 0 表示取消 1 表示待处理 2表示处理中 3 表示已完成',
+       `company_service_img` varchar(150) DEFAULT NULL COMMENT '公司用户资料协议',
+       `hour_money` decimal(10,0) DEFAULT '0' COMMENT '时薪／H',
+       `add_time` int(11) DEFAULT NULL COMMENT '下单时间',
+       PRIMARY KEY (`order_id`)
+     ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+     -- ----------------------------
+     --  Records of `order_suc`
+     -- ----------------------------
+     BEGIN;
+     INSERT INTO `order_suc` VALUES ('1', '3', '兼职促销', '23', '初中及以下', '不限', '20-30', '3345号大街', '16', '请输入职责我的打算大的奥迪大大打算', '找了么', '4', '13', '21', '2', '1', 'uploads/2017/07/20825a22009e89585ca91140a9de571f70head.png', '20', '23456787'), ('2', '4', '大楼保洁', '2', '初中及以下', '一年', '20-30', '川沙任命副', '17', '请输入职责啊啊啊啊啊啊', '德诚科技', '4', '12', '23', '2', '1', 'uploads/2017/07/20cc8520e549f5f9ce7bacd9448027ad31head.png', '10', '34567678'), ('3', '3', '兼职外卖', '3', '初中及以下', '不限', '20-30', '市中心', '14', '请输入职责', '找了么责任有限公司', '4', '12', '22', '2', '1', null, '34', '34567677'), ('4', '3', '兼职外卖', '3', '初中及以下', '不限', '20-30', '市中心', '11', '请输入职责', '隆达股份有限公司', '4', '12', '22', '2', '1', null, '30', '23454567'), ('5', '3', '兼职外卖', '3', '初中及以下', '不限', '20-30', '市中心', '12', '请输入职责', '去哪网科技有限公司', '4', '12', '22', '2', '1', null, '10', '23456567'), ('6', '1', '上海大世界', '32', '初中及以下', '一年', '30-40', '金沙湾', '19', '请输入职责外的撒的阿斯顿啊', '上海不夜城', '4', '14', '22', '2', '1', 'uploads/2017/07/20f0d9234051175806213a8b5cf4728a5dhead.png', '23', '1500553165');
+     COMMIT;
+
+     SET FOREIGN_KEY_CHECKS = 1;
+
+2017-07-24
+
+ALTER TABLE `order_suc` ADD `is_mandate` TINYINT(1) NOT NULL COMMENT '是否薪资托管 1 是已经托管0 是未托管' AFTER `add_time`;
+ALTER TABLE `order_post` ADD `company_name` VARCHAR(50) NOT NULL COMMENT '公司名称' AFTER `area_id`;
+
